@@ -1,0 +1,21 @@
+{
+	"name": "vite-plugin-vue-jump",
+	"version": "0.0.2",
+	"license": "MIT",
+	"files": [
+		"out",
+		"client.js",
+		"client.d.ts"
+	],
+	"main": "out/index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/johnsoncodehk/vite-plugin-vue-jump.git"
+	},
+	"devDependencies": {
+		"@types/node": "latest",
+		"@vitejs/plugin-vue": "latest",
+		"typescript": "latest",
+		"vue": "latest"
+	}
+}
