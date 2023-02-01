@@ -21,26 +21,23 @@ app.use(jumpPlugin);
 Vite config:
 
 ```ts
-import { createVuePluginOptions } from 'vite-plugin-vue-jump';
+import { createVuePluginOptions, searchPackageJson } from 'vite-plugin-vue-jump';
 
 export default {
-  vue: createVuePluginOptions(
-    { reactivityTransform: true }, // base config
-    (filePath) => {
-      const info = searchPackageJson(filePath);
-      if (info) {
-        let url: string;
+	vue: createVuePluginOptions(
+		// base config
+		{ reactivityTransform: true },
 		// resolve url for dependencies
-        if (info.packageJson.name === '@vue/theme') {
-          url = 'https://github.com/vuejs/theme/tree/main/' + info.fileRelativePath;
-        }
-        else {
-          url = 'https://github.com/volarjs/volarjs.github.io/blob/master/' + info.fileRelativePath;
-        }
-        return url;
-      }
-    },
-  )
+		(filePath) => {
+			const info = searchPackageJson(filePath);
+			if (info.packageJson.name === '@vue/theme') {
+				return 'https://github.com/vuejs/theme/tree/main/' + info.fileRelativePath;
+			}
+			else if (info.packageJson.name === '@volar/docs') {
+				return 'https://github.com/volarjs/volarjs.github.io/blob/master/' + info.fileRelativePath;
+			}
+		},
+	)
 };
 ```
 
