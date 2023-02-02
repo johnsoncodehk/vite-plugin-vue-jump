@@ -1,6 +1,6 @@
-import type { App } from 'vue';
+import { Vue2, isVue3, type App } from 'vue-demi';
 
-export default function install(app: App, options?: {
+export default function install(app: typeof Vue2 | App, options?: {
 	overlayStyle?: CSSStyleDeclaration,
 	hotKey?: string,
 }) {
@@ -35,10 +35,17 @@ export default function install(app: App, options?: {
 		range: [number, number];
 	} | undefined;
 
-	app.config.globalProperties.$__jumpToCode = {
-		highlight,
-		unHighlight,
-	};
+	if (isVue3) {
+		app.config.globalProperties.$__jumpToCode = {
+			highlight,
+			unHighlight,
+		};
+	} else {
+		app.prototype.$__jumpToCode = {
+			highlight,
+			unHighlight,
+		}
+	}
 
 	function enable() {
 		enabled = true;
