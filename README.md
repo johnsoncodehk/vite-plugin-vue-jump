@@ -22,9 +22,10 @@ Vite config:
 
 ```ts
 import { createVuePluginOptions, searchPackageJson } from 'vite-plugin-vue-jump';
+import vue from '@vitejs/plugin-vue';
 
 export default {
-	vue: createVuePluginOptions(
+	plugins: [vue(createVuePluginOptions(
 		// base config
 		{ reactivityTransform: true },
 		// resolve url for dependencies
@@ -37,7 +38,7 @@ export default {
 				return 'https://github.com/volarjs/volarjs.github.io/blob/master/' + info.fileRelativePath;
 			}
 		},
-	)
+	))]
 };
 ```
 
