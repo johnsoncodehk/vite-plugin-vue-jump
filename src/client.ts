@@ -1,6 +1,6 @@
-import type { App } from 'vue';
+import { Vue2, isVue3, type App } from 'vue-demi';
 
-export default function install(app: App, options?: {
+export default function install(app: typeof Vue2 | App, options?: {
 	overlayStyle?: CSSStyleDeclaration,
 	hotKey?: string,
 }) {
@@ -8,25 +8,24 @@ export default function install(app: App, options?: {
 	if (!globalThis.window)
 		return;
 
-	const hotKey = options?.hotKey ?? 'Alt';
+	const hotKey = () => options?.hotKey ?? 'Alt';
+	const overlay = createOverlay();
+	const clickMask = createClickMask();
 
 	window.addEventListener('scroll', updateOverlay);
 	window.addEventListener('pointerdown', event => {
 		disable(true);
 	});
 	window.addEventListener('keydown', event => {
-		if (event.key === hotKey) {
+		if (event.key === hotKey()) {
 			enable();
 		}
 	});
 	window.addEventListener('keyup', event => {
-		if (event.key === hotKey) {
+		if (event.key === hotKey()) {
 			disable(false);
 		}
 	});
-
-	const overlay = createOverlay();
-	const clickMask = createClickMask();
 
 	let highlightNodes: [Element, string, [number, number]][] = [];
 	let enabled = false;
@@ -35,10 +34,17 @@ export default function install(app: App, options?: {
 		range: [number, number];
 	} | undefined;
 
-	app.config.globalProperties.$__jumpToCode = {
-		highlight,
-		unHighlight,
-	};
+	if (isVue3) {
+		(app as App).config.globalProperties.$__jumpToCode = {
+			highlight,
+			unHighlight,
+		};
+	} else {
+		app.prototype.$__jumpToCode = {
+			highlight,
+			unHighlight,
+		};
+	}
 
 	function enable() {
 		enabled = true;
