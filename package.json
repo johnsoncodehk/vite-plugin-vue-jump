@@ -13,11 +13,11 @@
 		"url": "https://github.com/johnsoncodehk/vite-plugin-vue-jump.git"
 	},
 	"dependencies": {
-    "vue-demi": "latest"
+		"vue-demi": "latest"
 	},
-  "peerDependencies": {
-    "vue": "^2.0.0 || >=3.0.0"
-  },
+	"peerDependencies": {
+		"vue": "^2.0.0 || >=3.0.0"
+	},
 	"devDependencies": {
 		"@types/node": "latest",
 		"@vitejs/plugin-vue": "latest",
