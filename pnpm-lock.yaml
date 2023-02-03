@@ -5,7 +5,7 @@ specifiers:
   '@vitejs/plugin-vue': latest
   typescript: latest
   vue: latest
-  vue-demi: latest
+  vue-demi: ^0.13.11
 
 dependencies:
   vue-demi: 0.13.11_vue@3.2.47
